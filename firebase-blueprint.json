@@ -1,0 +1,170 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with contact, delivery address, and preferences in Kenya.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth user unique identifier.",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Customer full name.",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "Customer primary email address.",
+          "maxLength": 150
+        },
+        "phone": {
+          "type": "string",
+          "description": "Safaricom phone number for M-Pesa notifications.",
+          "maxLength": 30
+        },
+        "county": {
+          "type": "string",
+          "description": "Kenyan County for shipping destination.",
+          "maxLength": 60
+        },
+        "town": {
+          "type": "string",
+          "description": "Town or neighborhood in Kenya.",
+          "maxLength": 100
+        },
+        "deliveryAddress": {
+          "type": "string",
+          "description": "Detailed physical delivery directions or estate/building.",
+          "maxLength": 250
+        },
+        "avatar": {
+          "type": "string",
+          "description": "User profile picture or Google avatar URL.",
+          "maxLength": 500
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last update.",
+          "maxLength": 50
+        }
+      },
+      "required": ["uid", "name", "email"]
+    },
+    "UserFavorite": {
+      "title": "UserFavorite",
+      "description": "A saved favorite footwear item for the user.",
+      "type": "object",
+      "properties": {
+        "shoeId": {
+          "type": "string",
+          "description": "Identifier of the footwear item.",
+          "maxLength": 64
+        },
+        "shoeName": {
+          "type": "string",
+          "description": "Name of the shoe.",
+          "maxLength": 100
+        },
+        "price": {
+          "type": "number",
+          "description": "Price in Kenyan Shillings (KSh)."
+        },
+        "category": {
+          "type": "string",
+          "description": "Footwear category.",
+          "maxLength": 50
+        },
+        "silhouette": {
+          "type": "string",
+          "description": "Footwear silhouette type.",
+          "maxLength": 50
+        },
+        "addedAt": {
+          "type": "string",
+          "description": "ISO timestamp when added to favorites.",
+          "maxLength": 50
+        }
+      },
+      "required": ["shoeId", "shoeName", "price"]
+    },
+    "UserOrder": {
+      "title": "UserOrder",
+      "description": "Completed footwear order placed with M-Pesa payment.",
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "description": "Unique order code.",
+          "maxLength": 64
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of customer placing the order.",
+          "maxLength": 128
+        },
+        "mpesaReceiptNumber": {
+          "type": "string",
+          "description": "Official Safaricom M-Pesa transaction receipt code.",
+          "maxLength": 30
+        },
+        "mpesaPhone": {
+          "type": "string",
+          "description": "M-Pesa registered phone number used for payment.",
+          "maxLength": 30
+        },
+        "totalAmountKSh": {
+          "type": "number",
+          "description": "Total payment in Kenyan Shillings (KSh)."
+        },
+        "shippingCostKSh": {
+          "type": "number",
+          "description": "Courier shipping cost in KSh."
+        },
+        "deliveryAddress": {
+          "type": "string",
+          "description": "Destination address in Kenya.",
+          "maxLength": 250
+        },
+        "deliveryCounty": {
+          "type": "string",
+          "description": "Destination county in Kenya.",
+          "maxLength": 60
+        },
+        "status": {
+          "type": "string",
+          "description": "Delivery progression status.",
+          "enum": ["processing", "paid_mpesa", "dispatched", "delivered", "cancelled"],
+          "maxLength": 30
+        },
+        "items": {
+          "type": "string",
+          "description": "JSON string summary of purchased shoe items.",
+          "maxLength": 5000
+        },
+        "placedAt": {
+          "type": "string",
+          "description": "ISO timestamp when order was placed.",
+          "maxLength": 50
+        }
+      },
+      "required": ["orderId", "userId", "mpesaReceiptNumber", "totalAmountKSh", "status", "placedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Individual customer user profile document."
+    },
+    "/users/{userId}/favorites/{shoeId}": {
+      "schema": "UserFavorite",
+      "description": "Footwear item saved in the user's wishlist."
+    },
+    "/users/{userId}/orders/{orderId}": {
+      "schema": "UserOrder",
+      "description": "Past footwear order placed by the user with M-Pesa."
+    }
+  }
+}

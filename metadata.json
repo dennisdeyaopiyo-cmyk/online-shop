@@ -1,0 +1,7 @@
+{
+  "name": "Footwear Store Kenya",
+  "description": "An online store for all types of footwear with user profiles, order history tracking, saved favorites, and secure M-Pesa checkout in Kenyan Shillings (KSh).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
